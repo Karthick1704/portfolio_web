@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Karthick S — Software Application Engineer II</title>
 <meta name="description" content="Portfolio of Karthick S — Software Application Engineer II at Amazon. DevOps engineer, cloud architect, and UI/UX enthusiast from Tamil Nadu, India.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.mux.com; media-src https://stream.mux.com blob:">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta name="referrer" content="no-referrer">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +79,7 @@ body.light-mode .footer{border-top-color:rgba(0,0,0,0.08)}
 body.light-mode .btn{background:rgba(0,0,0,0.04);border-color:rgba(0,0,0,0.1);color:var(--text-primary)}
 body.light-mode .section-orb-1,.light-mode .section-orb-2,.light-mode .section-orb-3{opacity:0!important}
 /* Hero */
-.hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#070612}
 #particles-bg{position:absolute;inset:0;z-index:0}
 /* Rocket & Asteroid */
 .hero-rocket,.hero-asteroid{position:absolute;z-index:1;pointer-events:none;opacity:0}
@@ -87,7 +87,7 @@ body.light-mode .section-orb-1,.light-mode .section-orb-2,.light-mode .section-o
 .hero-asteroid{font-size:24px;top:60%;animation:asteroidFly 22s 8s linear infinite}
 @keyframes rocketFly{0%{left:-60px;opacity:0;transform:rotate(-25deg)}5%{opacity:1}15%{opacity:1;transform:rotate(-25deg) scale(1.1)}50%{opacity:.8;transform:rotate(-20deg)}85%{opacity:.6}95%{opacity:0}100%{left:110%;opacity:0;transform:rotate(-15deg)}}
 @keyframes asteroidFly{0%{right:-60px;opacity:0;transform:rotate(0deg)}5%{opacity:.8}20%{opacity:.9;transform:rotate(60deg)}50%{opacity:.7;transform:rotate(180deg)}80%{opacity:.4;transform:rotate(300deg)}95%{opacity:0}100%{right:110%;opacity:0;transform:rotate(360deg)}}
-.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+.hero-content{position:relative;z-index:20;text-align:center;padding:0 24px}
 .hero-name{font-size:clamp(48px,8vw,96px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:16px;user-select:none}
 .hero-name .accent{color:var(--accent)}
 .hero-tagline{font-size:clamp(18px,2.5vw,28px);color:var(--text-secondary);font-weight:400;min-height:40px;margin-bottom:40px}
@@ -201,7 +201,9 @@ body.light-mode .skills-tab.active{background:rgba(0,0,0,0.08);box-shadow:none}
 .footer p{color:var(--text-secondary);font-size:14px}
 .footer .footer-name{color:var(--text-primary);font-weight:600;user-select:none}
 /* Stats */
-.stats-row{display:flex;justify-content:center;gap:64px;margin-top:48px;flex-wrap:wrap}
+@keyframes blurIn{from{opacity:0;filter:blur(10px);transform:translateY(20px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
+.hero-tagline{animation:blurIn .6s ease forwards .4s;opacity:0;}
+.stats-row{display:flex;justify-content:center;gap:64px;margin-top:48px;flex-wrap:wrap;animation:blurIn .6s ease forwards .6s;opacity:0;}
 .stat{text-align:center}
 .stat-number{font-size:clamp(36px,5vw,56px);font-weight:800;color:var(--text-primary);letter-spacing:-1px}
 .stat-number .accent{color:var(--accent)}
@@ -232,6 +234,7 @@ body.light-mode .nav-links{background:rgba(245,245,247,0.95)}
 .nav-links.open{width:100%}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
 <!-- Lightbox Modal -->
@@ -265,9 +268,8 @@ body.light-mode .nav-links{background:rgba(245,245,247,0.95)}
 
 <!-- Hero -->
 <section class="hero" id="hero">
-<div id="particles-bg"></div>
-<div class="hero-rocket">🚀</div>
-<div class="hero-asteroid">☄️</div>
+<video id="hero-video" muted autoplay loop playsinline style="position:absolute;top:0;width:auto;height:100%;object-fit:cover;margin-left:200px;transform:scale(1.2);transform-origin:left;z-index:0;pointer-events:none;"></video>
+<div style="position:absolute;bottom:0;width:100%;height:160px;background:linear-gradient(to top,#070612,transparent);z-index:10;pointer-events:none;"></div>
 <div class="hero-content">
 <h1 class="hero-name">I'm Karthick <span class="accent">S</span></h1>
 <p class="hero-tagline"><span id="typewriter"></span><span class="typed-cursor">|</span></p>
@@ -520,29 +522,6 @@ body.light-mode .nav-links{background:rgba(245,245,247,0.95)}
 </footer>
 
 <script>
-/* ===== PARTICLES BACKGROUND ===== */
-(function(){
-const canvas=document.createElement('canvas');
-canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%';
-document.getElementById('particles-bg').appendChild(canvas);
-const ctx=canvas.getContext('2d');
-let w,h,particles=[];
-function resize(){w=canvas.width=canvas.offsetWidth;h=canvas.height=canvas.offsetHeight}
-resize();
-window.addEventListener('resize',resize);
-class Particle{
-constructor(){this.reset()}
-reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.size=Math.random()*2+.5;this.speedX=(Math.random()-.5)*.3;this.speedY=(Math.random()-.5)*.3;this.opacity=Math.random()*.4+.1}
-update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>w)this.speedX*=-1;if(this.y<0||this.y>h)this.speedY*=-1}
-draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(41,151,255,${this.opacity})`;ctx.fill()}
-}
-for(let i=0;i<80;i++)particles.push(new Particle());
-function animate(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{p.update();p.draw()});
-for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);
-if(dist<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(41,151,255,${.08*(1-dist/120)})`;ctx.lineWidth=.5;ctx.stroke()}}
-requestAnimationFrame(animate)}
-animate()
-})();
 
 /* ===== TYPEWRITER ===== */
 (function(){
@@ -714,6 +693,21 @@ var tags=target.querySelectorAll('.skill-tag');
 tags.forEach(function(tag){tag.style.animationDelay='0s';tag.classList.add('pop')});
 });
 });
+})();
+</script>
+<script>
+(function(){
+  var video=document.getElementById('hero-video');
+  var src='https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8';
+  if(Hls.isSupported()){
+    var hls=new Hls();
+    hls.loadSource(src);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function(){video.play();});
+  } else if(video.canPlayType('application/vnd.apple.mpegurl')){
+    video.src=src;
+    video.play();
+  }
 })();
 </script>
 </body>
