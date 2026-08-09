@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import { skillGroups } from "@/data/portfolio";
+import { withBasePath } from "@/lib/deployment";
 
 export function Reveal({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const reduce = useReducedMotion();
@@ -34,7 +35,7 @@ export function Counter({ value, suffix = "" }: { value: number; suffix?: string
   return <span aria-label={`${value}${suffix}`}><span ref={ref} aria-hidden="true">{value}{suffix}</span></span>;
 }
 
-export function AboutStory() { return <a className="text-button" href="/about">Read full bio <span aria-hidden="true">↗</span></a>; }
+export function AboutStory() { return <a className="text-button" href={withBasePath("/about/")}>Read full bio <span aria-hidden="true">↗</span></a>; }
 
 export function SkillsFilter() {
   const categories = Object.keys(skillGroups);
@@ -54,7 +55,7 @@ export function ExperienceCard({ company, role, period, summary, tech, progressi
 
 export function ProfilePhoto() {
   const [open, setOpen] = useState(false);
-  return <><button type="button" className="photo-button" onClick={() => setOpen(true)} aria-label="View full profile photo"><Image src="/profile.jpg" width={560} height={560} alt="Portrait of Karthick S" priority /></button><AnimatePresence>{open && <motion.div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Full profile photo" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}><motion.div initial={{ scale: .92 }} animate={{ scale: 1 }}><Image src="/profile.jpg" width={1200} height={1200} alt="Portrait of Karthick S" /></motion.div><button type="button" aria-label="Close full profile photo" onClick={() => setOpen(false)}><X /></button></motion.div>}</AnimatePresence></>;
+  return <><button type="button" className="photo-button" onClick={() => setOpen(true)} aria-label="View full profile photo"><Image src={withBasePath("/profile.jpg")} width={560} height={560} alt="Portrait of Karthick S" priority /></button><AnimatePresence>{open && <motion.div className="photo-lightbox" role="dialog" aria-modal="true" aria-label="Full profile photo" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)}><motion.div initial={{ scale: .92 }} animate={{ scale: 1 }}><Image src={withBasePath("/profile.jpg")} width={1200} height={1200} alt="Portrait of Karthick S" /></motion.div><button type="button" aria-label="Close full profile photo" onClick={() => setOpen(false)}><X /></button></motion.div>}</AnimatePresence></>;
 }
 
 export function BlockBannerBuild() {
