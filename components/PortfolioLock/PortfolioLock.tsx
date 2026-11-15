@@ -62,31 +62,11 @@ export function PortfolioLock({ onUnlock }: PortfolioLockProps) {
     unlockStarted.current = true;
     const run = ++unlockRun.current;
     const reveal = async () => {
-      if (reduce) {
-        await animate(".lock-main", { opacity: 0 }, { duration: .2 });
-        if (run !== unlockRun.current) return;
-        await animate(".unlock-loader", { opacity: 1 }, { duration: .15 });
-        flushSync(() => setRevealed(true));
-        await animate(".unlock-loader", { opacity: 1 }, { duration: .55 });
-        if (run === unlockRun.current) onUnlock();
-        return;
+      // Smooth cinematic fade out into pure black screen
+      await animate(".lock-main", { opacity: 0, scale: 0.94 }, { duration: reduce ? 0.2 : 0.65, ease: "easeInOut" });
+      if (run === unlockRun.current) {
+        onUnlock();
       }
-      await Promise.all([
-        animate(".lock-main", { opacity: 0, scale: .82 }, { duration: .65, ease: "easeInOut" }),
-        animate(".unlock-loader", { opacity: [0, 1] }, { duration: .35, ease: "easeOut" }),
-        animate(".unlock-loader-stage", { rotate: [0, 420], scale: [.45, 1.08, 1] }, { duration: 1.65, ease: [.4, 0, .2, 1] }),
-        animate(".unlock-loader-orbit", { rotate: [0, -720] }, { duration: 1.65, ease: [.4, 0, .2, 1] }),
-        animate(".unlock-loader-progress i", { scaleX: [0, .22, .72] }, { duration: 1.65, ease: "easeInOut" }),
-      ]);
-      if (run !== unlockRun.current) return;
-      flushSync(() => setRevealed(true));
-      await Promise.all([
-        animate(".unlock-loader-stage", { rotate: 540, scale: [1, 1.14, 1] }, { duration: .55, ease: "easeOut" }),
-        animate(".unlock-loader-signal", { opacity: [.35, 1, .35, 1], scale: [.94, 1.08, .98, 1] }, { duration: .55, ease: "easeOut" }),
-        animate(".unlock-loader-progress i", { scaleX: 1 }, { duration: .45, ease: "easeOut" }),
-      ]);
-      await animate(".unlock-loader", { opacity: 1 }, { duration: .45 });
-      if (run === unlockRun.current) onUnlock();
     };
     void reveal();
   }, [animate, onUnlock, reduce, solved]);
@@ -122,18 +102,10 @@ export function PortfolioLock({ onUnlock }: PortfolioLockProps) {
     setHint(null);
   };
 
-  const reset = () => { unlockRun.current += 1; unlockStarted.current = false; setPlaced([]); setDragging(null); setRejected(null); setHint(null); setSolving(false); setRevealed(false); setAutoGhost(null); void animate(".lock-main", { opacity: 1, scale: 1 }, { duration: .2 }); void animate(".unlock-loader", { opacity: 0 }, { duration: .15 }); void animate(".unlock-loader-stage", { rotate: 0, scale: .45 }, { duration: .15 }); void animate(".unlock-loader-progress i", { scaleX: 0 }, { duration: .15 }); };
+  const reset = () => { unlockRun.current += 1; unlockStarted.current = false; setPlaced([]); setDragging(null); setRejected(null); setHint(null); setSolving(false); setRevealed(false); setAutoGhost(null); void animate(".lock-main", { opacity: 1, scale: 1 }, { duration: .2 }); };
 
   return (
     <section ref={scope} className="portfolio-lock">
-      <div className="unlock-loader" role="status" aria-live="polite" aria-hidden={!solved}>
-        <div className="unlock-loader-stage">
-          <i className="unlock-loader-orbit" />
-          <b>KS</b>
-        </div>
-        <span className="unlock-loader-signal">{revealed ? "ACCESS GRANTED" : "LOADING PORTFOLIO"}</span>
-        <div className="unlock-loader-progress"><i /></div>
-      </div>
       <motion.div className="lock-main">
         <div className={`lock-badge ${solved ? "granted" : ""}`}>
           {solved ? <Unlock /> : <Lock />} {solved ? "ACCESS GRANTED" : "SYSTEM LOCKED"}
