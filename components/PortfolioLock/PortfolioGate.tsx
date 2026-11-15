@@ -9,6 +9,7 @@ type GateState = "locked" | "intro" | "portfolio";
 
 export function PortfolioGate({ children }: { children: React.ReactNode }) {
   const [stage, setStage] = useState<GateState>("locked");
+  const [flashing, setFlashing] = useState(false);
 
   return (
     <>
@@ -17,33 +18,50 @@ export function PortfolioGate({ children }: { children: React.ReactNode }) {
           <motion.div
             key="lock"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }}
+            exit={{ opacity: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }}
           >
             <PortfolioLock onUnlock={() => setStage("intro")} />
           </motion.div>
         )}
-
-        {stage === "intro" && (
-          <motion.div
-            key="intro"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }}
-            exit={{ opacity: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }}
-          >
-            <CinematicIntro onComplete={() => setStage("portfolio")} />
-          </motion.div>
-        )}
       </AnimatePresence>
+
+      {stage === "intro" && (
+        <div key="intro" style={{ position: "relative", zIndex: 900 }}>
+          <CinematicIntro
+            onSnap={() => setFlashing(true)}
+            onComplete={() => setStage("portfolio")}
+          />
+        </div>
+      )}
 
       {stage === "portfolio" && (
         <motion.div
           key="portfolio"
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
         >
           {children}
         </motion.div>
       )}
+
+      {/* Global White Flash: Sweeps whole screen pure white on the snap, then reveals home screen */}
+      <AnimatePresence>
+        {flashing && (
+          <motion.div
+            key="white-flash"
+            className="global-white-flash"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: stage === "portfolio" ? 0 : 1 }}
+            transition={{
+              duration: stage === "portfolio" ? 0.95 : 0.35,
+              ease: stage === "portfolio" ? [0.16, 1, 0.3, 1] : "easeIn",
+            }}
+            onAnimationComplete={() => {
+              if (stage === "portfolio") setFlashing(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

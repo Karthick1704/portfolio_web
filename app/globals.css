@@ -60,18 +60,25 @@
 @media(max-width:900px){.mobile-nav{top:70px;left:auto;right:0;width:min(280px,calc(100vw - 32px));border-radius:24px;border-color:rgba(255,255,255,.26);background:linear-gradient(145deg,rgba(18,24,31,.9),rgba(8,12,17,.78));box-shadow:inset 0 1px rgba(255,255,255,.18),0 24px 55px rgba(0,0,0,.48);-webkit-backdrop-filter:blur(32px) saturate(180%);backdrop-filter:blur(32px) saturate(180%)}.mobile-nav a{border-radius:14px}.mobile-nav a:hover{background:rgba(255,255,255,.09)}}
 
 /* ===== CINEMATIC VIDEO & TYPOGRAPHY INTRO ===== */
-.cinematic-intro-root{position:fixed;inset:0;width:100vw;height:100vh;background-color:#000000;z-index:999999;display:flex;flex-direction:column;justify-content:space-between;align-items:center;overflow:hidden}
+.cinematic-intro-root{position:fixed;inset:0;width:100vw;height:100vh;background-color:#000000;z-index:999999;display:flex;flex-direction:column;justify-content:space-between;align-items:center;overflow:hidden;transition:background-color .35s ease-out}
+.cinematic-intro-root.snapped{background-color:#ffffff}
 .intro-skip-button{position:absolute;top:24px;right:28px;z-index:20;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);color:rgba(255,255,255,0.65);font-family:inherit;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:8px 18px;border-radius:40px;cursor:pointer;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:all .3s}
 .intro-skip-button:hover{background:rgba(255,255,255,0.2);color:#FFFFFF;border-color:rgba(255,255,255,0.35);transform:scale(1.04)}
-.intro-video-stage{width:100%;height:68vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000}
-.intro-video-element{width:100%;height:100%;object-fit:cover;object-position:center;display:block;border:none;outline:none;background:#000000}
-.intro-typography-stage{width:100%;height:32vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#000000;padding:0 24px}
+.intro-video-stage{width:100%;height:70vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#000000}
+.intro-video-element{width:100%;height:100%;object-fit:cover;object-position:center 6%;display:block;border:none;outline:none;background:#000000}
+.intro-typography-stage{width:100%;height:30vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#000000;padding:0 24px;transition:background-color .35s ease-out}
+.intro-typography-stage.snapped{background-color:#ffffff}
 .intro-word-row{display:flex;align-items:center;justify-content:center;white-space:nowrap;user-select:none;padding-left:clamp(4px,1.8vw,18px)}
 .intro-char-wrapper{position:relative;display:inline-block;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter",sans-serif;font-weight:800;font-size:clamp(26px,5.8vw,62px);letter-spacing:clamp(4px,1.8vw,18px);line-height:1;text-transform:uppercase}
 .intro-char-outline{display:inline-block;color:rgba(255,255,255,0.14);-webkit-text-stroke:1px rgba(255,255,255,0.28)}
 .intro-char-fill{position:absolute;top:0;left:0;width:100%;height:100%;color:#F5F5F7;-webkit-text-stroke:0;clip-path:inset(100% 0 0 0);pointer-events:none;will-change:clip-path}
+
+/* Global White Flash Transition across full viewport on snap */
+.global-white-flash{position:fixed;inset:0;width:100vw;height:100vh;background-color:#ffffff;z-index:1000001;pointer-events:none;will-change:opacity}
+
 @media(max-width:768px){
-.intro-video-stage{height:65vh}
-.intro-typography-stage{height:35vh}
+.intro-video-stage{height:67vh}
+.intro-video-element{object-position:center 2%}
+.intro-typography-stage{height:33vh}
 .intro-skip-button{top:16px;right:16px;padding:6px 14px;font-size:10px}
 }
