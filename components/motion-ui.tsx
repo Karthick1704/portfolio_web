@@ -23,10 +23,6 @@ export function MobileNav({ items }: { items: readonly { href: string; label: st
   return <><button ref={button} className="menu-button" aria-expanded={open} aria-controls="mobile-nav" aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button><AnimatePresence>{open && <motion.nav id="mobile-nav" className="mobile-nav" aria-label="Mobile navigation" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>{items.map(item => <a key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}</a>)}</motion.nav>}</AnimatePresence></>;
 }
 
-export function HeroSystemVisual() {
-  return null;
-}
-
 export function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const visible = useInView(ref, { once: true });
