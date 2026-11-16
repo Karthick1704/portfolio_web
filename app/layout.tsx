@@ -9,11 +9,11 @@ const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "Karthick S — Software Application Engineer", template: "%s | Karthick S" },
-  description: "Karthick S builds reliable cloud applications, production systems and digital experiences—block by block.",
+  title: { default: "Karthick S — Application Support & Site Reliability Engineer", template: "%s | Karthick S" },
+  description: "Karthick S is an application support and site reliability engineer keeping production applications and Linux systems healthy at Amazon.",
   alternates: { canonical: siteUrl },
-  openGraph: { title: "Karthick S — Built Block by Block", description: "Software Application Engineer building reliable cloud applications and production systems.", url: siteUrl, siteName: "Karthick S Portfolio", type: "profile" },
-  twitter: { card: "summary", title: "Karthick S — Built Block by Block", description: "Software Application Engineer building reliable cloud applications and production systems." },
+  openGraph: { title: "Karthick S — Built Block by Block", description: "Application support and site reliability engineer: on-call, observability, Linux and AI-assisted operations.", url: siteUrl, siteName: "Karthick S Portfolio", type: "profile" },
+  twitter: { card: "summary", title: "Karthick S — Built Block by Block", description: "Application support and site reliability engineer: on-call, observability, Linux and AI-assisted operations." },
   robots: { index: true, follow: true },
 };
 export const viewport: Viewport = { themeColor: "#080b0f", width: "device-width", initialScale: 1 };
