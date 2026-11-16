@@ -97,8 +97,9 @@
 .city-diorama.night{--glow:rgba(100,110,230,.2)}
 .city-diorama:before{content:"";position:absolute;inset:14% 2% 0;border-radius:50%;background:radial-gradient(closest-side,var(--glow),transparent)}
 .city-diorama canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.city-spline{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ink)}
-.city-info,.city-shuffle{z-index:1}
+.city-info,.city-shuffle,.city-credit{z-index:1}
+.city-credit{position:absolute;left:6px;bottom:6px;font:500 10px var(--font-mono);letter-spacing:.08em;color:var(--muted);opacity:.8}
+.city-credit:hover{color:var(--cyan);opacity:1}
 .city-info{position:absolute;top:0;left:0;right:0;display:grid;justify-items:center;gap:5px;text-align:center;pointer-events:none;text-shadow:0 1px 10px var(--ink),0 0 3px var(--ink);animation:city-in .7s ease-out both}
 .city-info p{margin:0}
 .city-name{font-weight:800;font-size:clamp(1.7rem,3.2vw,2.6rem);letter-spacing:.06em;line-height:1;text-transform:uppercase}
