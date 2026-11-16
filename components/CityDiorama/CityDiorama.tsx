@@ -11,8 +11,7 @@ interface Weather {
   isDay: boolean;
 }
 
-const SWITCH_EVERY = 12000;
-const TOKYO_SPLINE = "https://my.spline.design/untitled-YrnitOYwQG02N7D6wEpWDM5q/";
+const DEFAULT_CITY = CITIES.findIndex((c) => c.name === "Tokyo");
 const WEATHER_URL =
   "https://api.open-meteo.com/v1/forecast" +
   `?latitude=${CITIES.map((c) => c.lat)}&longitude=${CITIES.map((c) => c.lon)}` +
@@ -88,10 +87,10 @@ export function CityDiorama() {
         // No WebGL: the city name, date and weather still show.
       }
       sceneRef.current = scene;
-      shuffle();
+      // Tokyo is always the first city; the shuffle button changes it.
+      setView({ city: DEFAULT_CITY, now: Date.now() });
     });
 
-    const timer = still ? 0 : window.setInterval(shuffle, SWITCH_EVERY);
     const sizeWatch = new ResizeObserver(() => scene?.resize());
     sizeWatch.observe(wrapEl);
     const viewWatch = new IntersectionObserver(([entry]) => {
@@ -110,7 +109,6 @@ export function CityDiorama() {
 
     return () => {
       gone = true;
-      window.clearInterval(timer);
       sizeWatch.disconnect();
       viewWatch.disconnect();
       wrapEl.removeEventListener("pointermove", onMove);
@@ -134,10 +132,6 @@ export function CityDiorama() {
   return (
     <div ref={wrapRef} className={`city-diorama${night ? " night" : ""}`}>
       <canvas ref={canvasRef} aria-hidden="true" />
-      {/* Tokyo uses the detailed Spline build; the other cities are drawn by scene.ts. */}
-      {city?.name === "Tokyo" && (
-        <iframe className="city-spline" src={TOKYO_SPLINE} title="Detailed 3D diorama of Tokyo" loading="lazy" />
-      )}
       {city && view && (
         <div className="city-info" key={view.city}>
           <p className="city-name">{city.name}</p>
@@ -155,6 +149,9 @@ export function CityDiorama() {
           )}
         </div>
       )}
+      <a className="city-credit" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">
+        Weather by Open-Meteo
+      </a>
       <button type="button" className="city-shuffle" onClick={shuffle} aria-label="Show another city">
         <Shuffle aria-hidden="true" />
       </button>
