@@ -218,3 +218,32 @@ body{background:transparent}
   .ghost-num{font-size:6.5rem;top:0;translate:0 -30%}
 }
 @media(prefers-reduced-motion:reduce){.hero-heading,.xp-when em i,.engine-status i.on{animation:none}.project-card,.credential-card,.xp-card{transform:none}}
+
+/* ───────────── About: the name as a contribution graph ───────────── */
+.name-graph{--c0:rgba(255,255,255,.055);--c1:#0a2f3d;--c2:#0a7d99;--c3:#00c2e6;--c4:#8df3ff;position:relative;margin:26px 0 64px;border:1px solid rgba(255,255,255,.1);border-radius:20px;background:linear-gradient(145deg,rgba(22,26,38,.74),rgba(11,13,20,.6));-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.name-graph:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(520px circle at var(--mx,50%) var(--my,50%),rgba(0,217,255,.12),transparent 65%)}
+.name-graph:hover:after{opacity:1}
+.ng-bar{display:flex;align-items:center;gap:14px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03)}
+.ng-dots{display:flex;gap:6px}.ng-dots i{width:10px;height:10px;border-radius:50%;background:#ff5f57}.ng-dots i:nth-child(2){background:#febc2e}.ng-dots i:nth-child(3){background:#28c840}
+.ng-bar code{flex:1;min-width:0;font:500 12px var(--font-mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ng-bar code b{color:var(--teal);margin-right:6px}.ng-bar code em{font-style:normal;color:var(--cyan)}
+.ng-bar button{position:relative;z-index:1;display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:transparent;color:var(--text);font:600 10px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;cursor:pointer;transition:border-color .2s,background .2s}
+.ng-bar button:hover{border-color:var(--cyan);background:rgba(0,217,255,.1)}.ng-bar button svg{width:12px;height:12px}
+.ng-body{display:flex;gap:10px;padding:clamp(16px,3vw,34px) clamp(12px,3vw,34px) clamp(10px,2vw,22px)}
+.ng-days{align-self:stretch;display:grid;grid-template-rows:repeat(7,1fr);font:500 9px/1 var(--font-mono);color:var(--muted);align-items:center;min-width:24px}
+.ng-grid{flex:1;align-self:flex-start;align-content:start;display:grid;grid-template-rows:repeat(7,auto);gap:clamp(1.5px,.25vw,3px)}
+.ng-grid i,.ng-legend i{aspect-ratio:1;border-radius:22%;background:var(--c0);outline:1px solid rgba(255,255,255,.03);outline-offset:-1px}
+.ng-grid i{transition:transform .18s,filter .18s}
+.ng-grid i:hover{transform:scale(1.5);filter:brightness(1.5);z-index:1}
+[data-l="1"]{--fill:var(--c1)}[data-l="2"]{--fill:var(--c2)}[data-l="3"]{--fill:var(--c3)}[data-l="4"]{--fill:var(--c4)}
+.ng-legend i[data-l]:not([data-l="0"]){background:var(--fill)}
+.name-graph.still .ng-grid i:not([data-l="0"]){background:var(--fill)}
+.name-graph.still .ng-grid i[data-l="3"],.name-graph.still .ng-grid i[data-l="4"]{box-shadow:0 0 12px rgba(0,217,255,.5)}
+.name-graph.play .ng-grid i:not([data-l="0"]){animation:ng-commit .6s cubic-bezier(.2,1.4,.4,1) both}
+.name-graph.play .ng-grid i[data-l="3"],.name-graph.play .ng-grid i[data-l="4"]{animation-name:ng-commit-glow}
+@keyframes ng-commit{0%{background:var(--c0);transform:scale(.4)}60%{background:#fff;transform:scale(1.35)}100%{background:var(--fill);transform:scale(1)}}
+@keyframes ng-commit-glow{0%{background:var(--c0);transform:scale(.4);box-shadow:none}55%{background:#fff;transform:scale(1.45);box-shadow:0 0 22px #fff}100%{background:var(--fill);transform:scale(1);box-shadow:0 0 12px rgba(0,217,255,.5)}}
+.ng-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:0 clamp(12px,3vw,34px) 20px;font:500 11px var(--font-mono);color:var(--muted)}
+.ng-foot p{margin:0;min-height:1.5em}.ng-foot b{color:var(--cyan);font-variant-numeric:tabular-nums}
+.ng-legend{display:inline-flex;align-items:center;gap:4px;font-size:10px}.ng-legend i{width:11px}
+@media(max-width:620px){.ng-days{display:none}.ng-grid{gap:1px}.ng-body{padding:18px 10px 12px}.ng-bar button{padding:8px 10px}.name-graph{margin-bottom:44px}}
