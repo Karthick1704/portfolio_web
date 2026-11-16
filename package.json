@@ -13,7 +13,8 @@
     "motion": "latest",
     "next": "^16.2.11",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^0.1.0",
@@ -21,6 +22,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/three": "^0.187.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.2.11",
     "tailwindcss": "latest",

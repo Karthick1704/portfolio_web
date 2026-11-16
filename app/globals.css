@@ -91,9 +91,27 @@
 .intro-skip-button{top:16px;right:16px;padding:6px 14px;font-size:10px}
 }
 
-/* ===== HERO LANDSCAPE ===== */
-/* No frame: the two gradients fade all four edges into the page background. */
-.hero-landscape{width:min(100%,640px);aspect-ratio:1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(transparent,#000 12%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(transparent,#000 12%,#000 86%,transparent);-webkit-mask-composite:source-in;mask-composite:intersect}
-.hero-landscape canvas{width:100%;height:100%;display:block}
-/* Phones: the hero is one column, so the landscape sits above the name. */
-@media(max-width:900px){.hero-media{display:grid;min-height:0}.hero-copy{grid-row:2}.hero-landscape{width:min(100%,420px)}}
+/* ===== CITY DIORAMA (hero) ===== */
+/* Transparent 3D canvas on a soft glow, with the city name, date and weather as real text above it. */
+.city-diorama{position:relative;width:min(100%,640px);aspect-ratio:1/1.12;--glow:rgba(120,190,255,.2)}
+.city-diorama.night{--glow:rgba(100,110,230,.2)}
+.city-diorama:before{content:"";position:absolute;inset:14% 2% 0;border-radius:50%;background:radial-gradient(closest-side,var(--glow),transparent)}
+.city-diorama canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.city-spline{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--ink)}
+.city-info,.city-shuffle{z-index:1}
+.city-info{position:absolute;top:0;left:0;right:0;display:grid;justify-items:center;gap:5px;text-align:center;pointer-events:none;text-shadow:0 1px 10px var(--ink),0 0 3px var(--ink);animation:city-in .7s ease-out both}
+.city-info p{margin:0}
+.city-name{font-weight:800;font-size:clamp(1.7rem,3.2vw,2.6rem);letter-spacing:.06em;line-height:1;text-transform:uppercase}
+.city-country{font:600 10px var(--font-mono);letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+.city-info svg{width:30px;height:30px;margin-top:4px;color:var(--gold)}
+.city-diorama.night .city-info svg{color:#cfd8ff}
+.city-date{font:500 12px var(--font-mono);color:var(--muted)}
+.city-temp{font-weight:700;font-size:1.3rem}
+.city-temp span{font:500 12px var(--font-mono);color:var(--muted);margin-left:6px}
+.city-shuffle{position:absolute;right:6px;bottom:6px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(18,18,26,.7);color:var(--text);cursor:pointer;transition:border-color .2s,transform .2s}
+.city-shuffle:hover{border-color:var(--cyan);transform:rotate(20deg)}
+.city-shuffle svg{width:16px;height:16px}
+@keyframes city-in{from{opacity:0;transform:translateY(8px)}}
+@media(prefers-reduced-motion:reduce){.city-info{animation:none}}
+/* Phones: the hero is one column, so the diorama sits above the name. */
+@media(max-width:900px){.hero-media{display:grid;min-height:0}.hero-copy{grid-row:2}.city-diorama{width:min(100%,420px)}}
