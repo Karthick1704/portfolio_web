@@ -12,7 +12,7 @@ export function ScrollProgress() {
   return <motion.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />;
 }
 
-const FX_CARDS = ".project-card,.credential-card,.skill-block,.contact-panel,.classified,.xp-card,.engine-cell,.engine-stack li";
+const FX_CARDS = ".project-card,.credential-card,.skill-block,.contact-panel,.classified,.xp-card,.engine-cell,.engine-stack li,.name-graph";
 const TILT_CARDS = ".project-card,.credential-card,.xp-card";
 
 /** One delegated listener: cursor-tracked spotlight on every card, 3D tilt on the big ones. */
