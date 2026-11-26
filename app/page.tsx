@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowDown, ArrowUpRight, Code2, Download, ExternalLink, GraduationCap, Mail, Wrench } from "lucide-react";
 import { AboutStory, BlockBannerBuild, Counter, MobileNav, ProfilePhoto, Reveal, SkillsFilter } from "@/components/motion-ui";
+import { Testimonials } from "@/components/testimonials/Testimonials";
 import { ShaderBackdrop } from "@/components/art/ShaderBackdrop";
 import { EngineReadout, ExperienceTimeline, PointerFx, ScrollProgress } from "@/components/art/fx";
 import { CityDiorama } from "@/components/CityDiorama/CityDiorama";
@@ -36,6 +37,7 @@ export default function Home() {
 
     <section id="skills" className="section alt"><SectionHeading eyebrow="04 / TOOLBOX" title="Skills" /><SkillsFilter /></section>
     <section id="credentials" className="section"><SectionHeading eyebrow="05 / VALIDATION" title="Credentials" /><div className="credential-groups">{["Certification", "Education"].map(group => <div key={group}><h3>{group === "Certification" ? "Certifications" : "Education"}</h3><div className="credential-grid">{credentials.filter(c => c.type === group).map(c => <Reveal key={c.name}><article className="credential-card">{group === "Certification" ? <Wrench aria-hidden /> : <GraduationCap aria-hidden />}<span>{c.date}</span><h4>{c.name}</h4><p>{c.issuer}</p></article></Reveal>)}</div></div>)}</div></section>
+    <Testimonials />
     <section id="engine" className="section alt"><SectionHeading eyebrow="06 / ENGINE" title="Under the hood" /><div className="engine"><Reveal><p className="engine-lede">Nothing here is a template or a video loop. The backdrop behind this page is generative art, computed per pixel, every frame, on your graphics card.</p><EngineReadout /></Reveal><Reveal><ul className="engine-stack">{stack.map(item => <li key={item.name}><b>{item.name}</b><span>{item.role}</span></li>)}</ul></Reveal></div></section>
     <section id="contact" className="section contact"><SectionHeading eyebrow="07 / CONTACT" title="Let’s build something reliable." /><div className="contact-panel"><p>If you need someone who keeps production dependable, from alarms and on-call to root cause and automation, I’d be glad to connect.</p><div className="contact-actions"><a className="button primary" href={`mailto:${profile.email}`}><Mail /> Email Karthick</a><a className="button" href={profile.linkedin} target="_blank" rel="noreferrer"><ExternalLink /> LinkedIn</a><a className="button" href={profile.github} target="_blank" rel="noreferrer"><Code2 /> GitHub</a><a className="button" href={withBasePath("/documents/Karthick_Resume.pdf")} download><Download /> Résumé</a></div><small>{profile.email}</small></div></section>
   </main><footer><div className="footer-block" aria-hidden="true" /><p>© {new Date().getFullYear()} Karthick S · Designed and engineered with WebGL, Three.js and Next.js</p><a href="#top">Back to top <ArrowDown className="up" /></a></footer></PortfolioGate>;
