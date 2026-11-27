@@ -19,24 +19,34 @@ export const projects = [
 ] as const;
 
 export const skillGroups = {
-  "Linux & Systems": ["Red Hat", "CentOS", "Filesystems", "systemd", "Permissions", "Networking", "Capacity Management"],
+  "Linux & Systems": ["Red Hat", "CentOS", "Linux Administration"],
   Programming: ["Python", "Java 17", "Bash", "SQL", "TypeScript"],
-  Observability: ["AWS CloudWatch", "Splunk", "Grafana", "Prometheus", "Log Analysis", "Alarm Thresholds", "Severity & Routing"],
-  Databases: ["Oracle SQL", "DynamoDB", "Query Analysis", "Data Verification", "ETL & Batch Jobs", "SAS"],
-  "Incident & Change": ["On-call Response", "Incident Triage", "Root-cause Analysis", "Change Requests", "ServiceNow"],
-  "CI/CD & Cloud": ["Git", "GitHub Actions", "Azure DevOps", "Canary Validation", "Rollback", "AWS EC2", "S3", "Lambda", "IAM", "VPC", "Azure", "Docker"],
-  "AI Operations": ["Claude Code", "GenAI Agents", "Log Analysis Automation", "Script Generation", "Incident Documentation"],
+  Observability: ["AWS CloudWatch", "Splunk", "Grafana", "Prometheus"],
+  Databases: ["Oracle SQL", "DynamoDB", "SAS", "ETL"],
+  "Incident & Change": ["On-call Response", "Incident Triage", "Root-cause Analysis", "ServiceNow"],
+  "CI/CD & Cloud": ["Git", "GitHub Actions", "Azure DevOps", "AWS EC2", "S3", "Lambda", "IAM", "VPC", "Azure", "Docker"],
+  "AI Operations": ["Claude Code", "GenAI Agents", "AI-assisted Tooling"],
 } as const;
 
-export const credentials = [
+export type Credential = {
+  name: string;
+  issuer: string;
+  date: string;
+  type: "Certification" | "Education";
+  /** Link to the certificate, shown as "View credential". */
+  url?: string;
+  credentialId?: string;
+};
+
+export const credentials: Credential[] = [
   { name: "B.E. Mechanical Engineering", issuer: "Francis Xavier Engineering College", date: "2018 — 2022 · CGPA: 8.42", type: "Education" },
   { name: "Higher Secondary — Computer Science", issuer: "Keins Matric Hr. Sec. School", date: "Score: 85.25%", type: "Education" },
-  { name: "Microsoft Azure Fundamentals (AZ-900)", issuer: "Microsoft", date: "2022", type: "Certification" },
-  { name: "Flutter Developer", issuer: "Besant Technologies", date: "2022", type: "Certification" },
-  { name: "UX Design & Graphic Design", issuer: "GrowthSchool", date: "January 2023", type: "Certification" },
-  { name: "Azure Data Engineer Associate", issuer: "Microsoft", date: "Certified", type: "Certification" },
-  { name: "Azure Kubernetes Services with DevOps & Terraform", issuer: "Udemy", date: "Certified", type: "Certification" },
-  { name: "Postman API Fundamentals", issuer: "Postman", date: "June 2024", type: "Certification" },
-  { name: "Python Basic", issuer: "HackerRank", date: "Certified", type: "Certification" },
-  { name: "Introduction to Cloud Computing", issuer: "Simplilearn", date: "Certified", type: "Certification" },
-] as const;
+  { name: "Microsoft Azure Fundamentals (AZ-900)", issuer: "Microsoft", date: "Mar 2022", type: "Certification", credentialId: "wa7LS-Fa4F", url: "https://drive.google.com/file/d/1B1-GmgKSbaZCnOF_wv7XpkXd8LmN7en8/view" },
+  { name: "Flutter Developer", issuer: "Besant Technologies", date: "2022", type: "Certification", url: "https://drive.google.com/file/d/1f0vyupqh3Tf4KXnnzrQtBGMUiPzxuRwN/view" },
+  { name: "UX Design & Graphic Design", issuer: "GrowthSchool", date: "January 2023", type: "Certification", url: "https://api.growthschool.io/certificate/22259bfe-0ffc-4e02-a765-7fd986300aaa" },
+  { name: "Azure Data Engineer Associate", issuer: "Microsoft", date: "Certified", type: "Certification", url: "https://drive.google.com/file/d/1HwgCl99hRXOc8C6sxFBe_SItNWRt1Cf8/view" },
+  { name: "Azure Kubernetes Services with DevOps & Terraform", issuer: "Udemy", date: "Certified", type: "Certification", url: "https://drive.google.com/file/d/1O5tQB1wUhUtIseTwxbuxmCSGGDU_XFCH/view" },
+  { name: "Postman API Fundamentals", issuer: "Postman", date: "June 2024", type: "Certification", url: "https://drive.google.com/file/d/1RnFWJczhrAEWJL2eMSOCM6fsa1i7wdYW/view" },
+  { name: "Python Basic", issuer: "HackerRank", date: "Dec 2022", type: "Certification", credentialId: "B2ADA14D7F9F" },
+  { name: "Introduction to Cloud Computing", issuer: "Simplilearn", date: "Certified", type: "Certification", url: "https://certificates.simplicdn.net/share/3293305_1646407962.pdf" },
+];

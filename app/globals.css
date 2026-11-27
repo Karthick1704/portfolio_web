@@ -338,3 +338,12 @@ html.unlocked .portfolio-lock{display:none}
   .tm-track{justify-content:flex-start;gap:22px;padding-inline:calc((100vw - var(--card-w)) / 2)}
   .tm-hint{text-align:center}
 }
+
+/* Credential ID and certificate link */
+.credential-card{display:flex;flex-direction:column}
+.credential-meta{margin-top:auto;padding-top:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.credential-meta small{font:500 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.credential-meta small b{font-weight:600;color:var(--text);letter-spacing:.04em;text-transform:none;user-select:all}
+.credential-meta a{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;font:600 10px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);text-decoration:none;padding:7px 12px;border:1px solid rgba(0,217,255,.3);border-radius:999px;transition:background .2s,border-color .2s}
+.credential-meta a:hover{background:rgba(0,217,255,.1);border-color:var(--cyan)}
+.credential-meta a svg{width:12px;height:12px}
