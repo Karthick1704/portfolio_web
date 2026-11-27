@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { beep, piyo, readSound, subscribeSound, writeSound } from "./sound";
 
 type Screen = { id: string; header: string; title: string; lines: string[] };
 type AlertStep = Omit<Screen, "id"> & { led: "red" | "amber" | "green"; hold: number };
@@ -22,49 +23,9 @@ const ALERT: AlertStep[] = [
 
 const REST = { x: -6, y: 12 };
 const AUTO_CYCLE_MS = 5200;
-const SOUND_KEY = "pager-sound";
-
-// Sound preference, persisted per browser; shared with React via an external store.
-const soundListeners = new Set<() => void>();
-const readSound = () => { try { return window.localStorage.getItem(SOUND_KEY) !== "off"; } catch { return true; } };
-const writeSound = (on: boolean) => {
-  try { window.localStorage.setItem(SOUND_KEY, on ? "on" : "off"); } catch { /* storage blocked */ }
-  soundListeners.forEach(fn => fn());
-};
-const subscribeSound = (fn: () => void) => { soundListeners.add(fn); return () => { soundListeners.delete(fn); }; };
-
 const REDUCE_QUERY = "(prefers-reduced-motion: reduce)";
 const subscribeReduce = (fn: () => void) => { const m = window.matchMedia(REDUCE_QUERY); m.addEventListener("change", fn); return () => m.removeEventListener("change", fn); };
 const readReduce = () => window.matchMedia(REDUCE_QUERY).matches;
-
-/** Short square-wave beeps, like a real pager. Created lazily on the first user click. */
-function usePagerSound() {
-  const ctx = useRef<AudioContext | null>(null);
-  return useCallback((pattern: number[], freq: number) => {
-    try {
-      const AC = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!AC) return;
-      ctx.current ??= new AC();
-      const ac = ctx.current;
-      let t = ac.currentTime + 0.02;
-      pattern.forEach((dur, i) => {
-        if (i % 2 === 0) {
-          const osc = ac.createOscillator();
-          const gain = ac.createGain();
-          osc.type = "square";
-          osc.frequency.value = freq;
-          gain.gain.setValueAtTime(0.0001, t);
-          gain.gain.exponentialRampToValueAtTime(0.05, t + 0.01);
-          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur / 1000);
-          osc.connect(gain).connect(ac.destination);
-          osc.start(t);
-          osc.stop(t + dur / 1000 + 0.02);
-        }
-        t += dur / 1000;
-      });
-    } catch { /* audio unavailable: stay silent */ }
-  }, []);
-}
 
 export function OnCallPager() {
   const [screenIndex, setScreenIndex] = useState(0);
@@ -78,7 +39,6 @@ export function OnCallPager() {
   const timers = useRef<number[]>([]);
   const body = useRef<HTMLDivElement>(null);
   const engaged = useRef(false); // hovered or focused: pause auto-cycle
-  const beep = usePagerSound();
 
   const alerting = alertStep >= 0;
   const active = alerting ? ALERT[alertStep] : SCREENS[screenIndex];
@@ -180,7 +140,7 @@ export function OnCallPager() {
       timers.current.push(window.setTimeout(() => {
         if (i < ALERT.length - 1) {
           setAlertStep(i + 1);
-          if (i + 1 === ALERT.length - 1 && sound) beep([90, 60, 160], 1760);
+          if (i + 1 === ALERT.length - 1 && sound) piyo();
         } else {
           setAlertStep(-1);
           setScreenIndex(0);

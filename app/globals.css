@@ -401,3 +401,18 @@ html.unlocked .portfolio-lock{display:none}
 @media(max-width:900px){.pager-stage{overflow-x:clip;padding-top:1.4rem}}
 @media(max-width:620px){.tm-scroller{margin-inline:-20px}}
 .hero-media{min-width:0}.pager-stage{width:100%;min-width:0}.pager-float{max-width:100%}
+
+/* ───────────── Hero: WebGL on-call pager ───────────── */
+.p3d{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;min-width:0}
+.p3d-stage{position:relative;width:100%;max-width:560px;aspect-ratio:52/42;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none}
+.p3d-stage canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .8s ease}
+.p3d-stage[data-ready] canvas{opacity:1}
+.p3d-foot{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 14px;margin-top:-8px}
+.p3d-hint{margin:0;font:500 11px var(--font-mono);letter-spacing:.06em;color:rgba(148,163,184,.78);text-align:center}
+.p3d-sound{border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--cyan);font:600 9.5px var(--font-mono);letter-spacing:.14em;padding:5px 10px;border-radius:999px;cursor:pointer;transition:border-color .2s,background .2s}
+.p3d-sound:hover{border-color:var(--cyan);background:rgba(0,217,255,.08)}
+.p3d-sound.off{color:var(--muted)}
+.p3d-keys{position:absolute;left:50%;bottom:44px;translate:-50% 0;display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity .2s}
+.p3d-keys:focus-within{opacity:1;pointer-events:auto}
+.p3d-keys button{border:1px solid rgba(0,217,255,.4);background:rgba(10,12,18,.9);color:var(--text);font:600 10px var(--font-mono);letter-spacing:.08em;padding:7px 10px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.p3d-keys button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
